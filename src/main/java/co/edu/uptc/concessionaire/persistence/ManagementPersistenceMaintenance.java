@@ -1,6 +1,7 @@
 package co.edu.uptc.concessionaire.persistence;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
@@ -11,6 +12,9 @@ import co.edu.uptc.concessionaire.model.Maintenance;
 
 public class ManagementPersistenceMaintenance extends FilePlain {
 	private Map <String, Maintenance> maintenanceMap;
+	public ManagementPersistenceMaintenance (){
+		this.maintenanceMap= new HashMap<String, Maintenance>();
+	}
 	
 	public void dumpFilePlain(String path) {
 		List<Object> maintenances = this.maintenanceMap.values().stream().collect(Collectors.toList());

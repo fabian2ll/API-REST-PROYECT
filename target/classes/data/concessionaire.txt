@@ -1,6 +1,4 @@
-BMW;1200;PQR67Q;2016;White;Emma Wilson;
 Triumph;675;ZAB01A;2017;Blue;Noah Harris;
-Aprilia;1000;IJK90C;2020;Yellow;Ava Harris;
 KTM;1290;YZA57X;2022;Orange;James Clark;
 Suzuki;750;NOP01A;2018;Black;Isabella Young;
 Suzuki;750;GHI78S;2020;Black;Mike Johnson;

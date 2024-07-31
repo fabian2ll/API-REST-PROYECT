@@ -1,5 +1,6 @@
 package co.edu.uptc.concessionaire.rest;
 
+import java.util.ArrayList;
 import java.util.Objects;
 
 import javax.ws.rs.Consumes;
@@ -47,6 +48,7 @@ public class ManagementUser {
 	@Produces({MediaType.APPLICATION_JSON})
 	public Boolean validateUser(@QueryParam("name") String nameUser,
 			@QueryParam("password") String password) {
+		System.out.println(nameUser+ " "+ password);
 		User userDTO = new User(nameUser, password);
 		User usuarioEncontrado = null;
 		try {
@@ -62,7 +64,7 @@ public class ManagementUser {
 	@Produces({ MediaType.APPLICATION_JSON })
 	@Consumes({ MediaType.APPLICATION_JSON })
 	public User createMaintenance(User user) {
-		if(managementPersistenceUser.getUsers().add(user) != false) {
+		if(managementPersistenceUser.getUsers().add(user) != false && managementPersistenceUser.getUsers().contains(user)!=true) {
 			managementPersistenceUser.dumpFileSerializate("users.ser");
 			return user;
 		}
@@ -82,6 +84,9 @@ public class ManagementUser {
 				u= user;
 			}
 		}
+		managementPersistenceUser.setUsers(new ArrayList<User>());
+		managementPersistenceUser.loadFileSerializate("users.ser");
+		System.out.println(managementPersistenceUser.getUsers());
 		if(u != null) {
 			managementPersistenceUser.getUsers().remove(u);
 			
