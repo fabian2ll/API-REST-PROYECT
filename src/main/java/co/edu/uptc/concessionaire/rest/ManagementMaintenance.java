@@ -1,5 +1,6 @@
 package co.edu.uptc.concessionaire.rest;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -15,16 +16,21 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 import co.edu.uptc.concessionaire.model.Maintenance;
-
+import co.edu.uptc.concessionaire.model.Motorcycle;
+import co.edu.uptc.concessionaire.model.User;
 import co.edu.uptc.concessionaire.persistence.ManagementPersistenceMaintenance;
+import co.edu.uptc.concessionaire.persistence.ManagementPersistenceMotorcycle;
+import co.edu.uptc.concessionaire.utils.ManagementListUtils;
 
 
 @Path("/ManagementMaintenance")
 public class ManagementMaintenance {
 	public static ManagementPersistenceMaintenance managementPersistenceMaintenance = new ManagementPersistenceMaintenance();
-	
+	public static ManagementPersistenceMotorcycle managementMotor= new ManagementPersistenceMotorcycle();
 	static {
 		managementPersistenceMaintenance.loadFilePlain("/data/maintenance.txt");
+		managementMotor.loadFilePlain("/data/concessionaire.txt");
+		
 	}
 	
 	@GET
@@ -32,6 +38,22 @@ public class ManagementMaintenance {
 	@Produces( { MediaType.APPLICATION_JSON } )
 	public List<Object> getMaintenances(){
 		return managementPersistenceMaintenance.getMaintenanceMap().values().stream().collect(Collectors.toList());
+	}
+	
+	
+	@GET
+	@Path("/validateMaintenance")
+	@Produces({MediaType.APPLICATION_JSON})
+	public Boolean validateUser(@QueryParam("plate") String plate) {
+		System.out.println(plate);
+		//managementMotor.loadFilePlain("concessionaire.txt");
+		System.out.println(managementMotor.getMapMotorcycle());
+		if (managementMotor.getMapMotorcycle().containsKey(plate)) {
+				return true;
+				
+			}
+		
+		return false;
 	}
 	
 	@GET

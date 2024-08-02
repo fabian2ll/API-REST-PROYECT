@@ -27,6 +27,7 @@ public class FilePlain {
 		StringBuilder contenido = new StringBuilder();
         try {
         	InputStream inputStream = getClass().getResourceAsStream(rutaNombre);
+        	System.out.println(inputStream);
         	if(inputStream == null) {
         		System.out.println("No encontró el archivo");
         		return "";
@@ -64,6 +65,8 @@ public class FilePlain {
 	 */
 	protected List<String> reader(String rutaNombre){
 		List<String> output = new ArrayList<>();
+		String rutaAbsoluta = 
+				"C:/Users/USER/Documents/eclipse-Workspace/Concessionaire/src/main/resources/data/" + rutaNombre;
 		StringTokenizer tokens = new StringTokenizer(this.readFile(rutaNombre), 
 				CommonConstants.LINE_BREAK);
 		while (tokens.hasMoreElements()) {
