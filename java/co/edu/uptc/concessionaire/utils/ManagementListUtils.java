@@ -61,7 +61,15 @@ public class ManagementListUtils<T> {
         return null;
     }
 
-    public List<T> getListObjects() {
+    
+    public void setListObjects(List<T> listObjects) {
+		this.listObjects = listObjects;
+	}
+
+
+
+	public List<T> getListObjects() {
         return listObjects;
     }
+    
 }

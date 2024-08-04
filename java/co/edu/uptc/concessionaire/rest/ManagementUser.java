@@ -1,9 +1,10 @@
 package co.edu.uptc.concessionaire.rest;
 
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
+
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -19,6 +20,7 @@ import javax.ws.rs.core.MediaType;
 import co.edu.uptc.concessionaire.model.User;
 import co.edu.uptc.concessionaire.persistence.ManagementPersistenceUser;
 import co.edu.uptc.concessionaire.utils.ManagementListUtils;
+
 
 
 
@@ -59,17 +61,20 @@ public class ManagementUser {
 	@Produces({MediaType.APPLICATION_JSON})
 	public Boolean validateUser(@QueryParam("name") String nameUser,
 			@QueryParam("password") String password) {
+		managementPersistenceUser.setUsers(new ArrayList<User>());
 		managementPersistenceUser.loadFileSerializate("users.ser");
+		System.out.println(managementPersistenceUser.getUsers());
 		System.out.println(nameUser+ " "+ password);
 		User userDTO = new User(nameUser, password);
+	
 		User usuarioEncontrado = null;
 		try {
 			usuarioEncontrado = managementListUtils.findObjectBinary(userDTO, "name", "password");
 		} catch (NoSuchFieldException | IllegalAccessException e) {
 			e.printStackTrace();
 		}
-		return !Objects.isNull(usuarioEncontrado);
-	}
+		System.out.println(usuarioEncontrado);
+		return !Objects.isNull(usuarioEncontrado);	}
 	
 	@POST
 	@Path("/createUser")
@@ -77,10 +82,14 @@ public class ManagementUser {
 	@Consumes({ MediaType.APPLICATION_JSON })
 	public User createMaintenance(User user) {
 		System.out.println(user);
+		managementPersistenceUser.setUsers(new ArrayList<User>());
+		managementPersistenceUser.loadFileSerializate("users.ser");
 		if(managementPersistenceUser.getUsers().add(user) != false ) {
 			System.out.println("sube al archivo");
-			managementPersistenceUser.getUsers().add(user);
+			
 			managementPersistenceUser.dumpFileSerializate("users.ser");
+			managementListUtils.setListObjects(managementPersistenceUser.getUsers());
+
 			return user;
 		}
 		return null;
@@ -97,6 +106,7 @@ public class ManagementUser {
 			if(user.getName().equals(plate)) {
 				managementPersistenceUser.getUsers().remove(user);
 				managementPersistenceUser.dumpFileSerializate("users.ser");	
+				managementListUtils.setListObjects(managementPersistenceUser.getUsers());
 				return user;
 			}
 		}

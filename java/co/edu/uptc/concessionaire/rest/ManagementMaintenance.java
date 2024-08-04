@@ -1,7 +1,9 @@
 package co.edu.uptc.concessionaire.rest;
 
-import java.util.ArrayList;
+
+import java.util.HashMap;
 import java.util.List;
+
 import java.util.Objects;
 import java.util.stream.Collectors;
 
@@ -17,10 +19,10 @@ import javax.ws.rs.core.MediaType;
 
 import co.edu.uptc.concessionaire.model.Maintenance;
 import co.edu.uptc.concessionaire.model.Motorcycle;
-import co.edu.uptc.concessionaire.model.User;
+
 import co.edu.uptc.concessionaire.persistence.ManagementPersistenceMaintenance;
 import co.edu.uptc.concessionaire.persistence.ManagementPersistenceMotorcycle;
-import co.edu.uptc.concessionaire.utils.ManagementListUtils;
+
 
 
 @Path("/ManagementMaintenance")
@@ -46,7 +48,8 @@ public class ManagementMaintenance {
 	@Produces({MediaType.APPLICATION_JSON})
 	public Boolean validateUser(@QueryParam("plate") String plate) {
 		System.out.println(plate);
-		//managementMotor.loadFilePlain("concessionaire.txt");
+		managementMotor.setMapMotorcycle(new HashMap<String, Motorcycle>());
+		managementMotor.loadFilePlain("/data/concessionaire.txt");
 		System.out.println(managementMotor.getMapMotorcycle());
 		if (managementMotor.getMapMotorcycle().containsKey(plate)) {
 				return true;
